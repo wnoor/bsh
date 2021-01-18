@@ -1,0 +1,39 @@
+import javax.naming.*;
+import javax.naming.directory.*;
+import javax.naming.directory.SearchResult.*;
+import javax.naming.factory.*;
+import javax.naming.ldap.*;
+
+String host = "IP/Hostname";
+String port = "636";
+String user = "";
+String decryptedPassword="";
+
+public Hashtable init() {
+    // Connect application and search
+    Hashtable env = new Hashtable();  
+    env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");  
+    env.put(Context.PROVIDER_URL, "ldaps://" +  host + ":" + port);  
+    env.put(Context.SECURITY_AUTHENTICATION, "simple");  
+    env.put(Context.SECURITY_PRINCIPAL, user);  
+    env.put(Context.SECURITY_CREDENTIALS, decryptedPassword);  
+    env.put(Context.REFERRAL, "follow"); 
+		
+    return env;
+  }
+public NamingEnumeration searchByFilter(String searchString, Long limit) {
+    Hashtable env = init();
+    InitialDirContext ctx1 = new InitialDirContext(env);  
+    SearchControls searchControls = new SearchControls();  
+    searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+    searchControls.setCountLimit(limit);
+    	
+    NamingEnumeration result = null;
+    try {
+  	  result = ctx1.search(searchBase,searchString, searchControls);
+    } finally {
+     	ctx1.close(); 
+    }
+    return result;
+  }
+
