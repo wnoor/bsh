@@ -1,4 +1,4 @@
-# bsh
+# bsh-ldapsearch
 Simple Bean shell code to connect and search through ldap
 
 Beanshell interpreter is required to execute the code. Script can also be executed using Groovy.
