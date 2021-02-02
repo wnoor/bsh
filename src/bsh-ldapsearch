@@ -21,6 +21,9 @@ public Hashtable init() {
 		
     return env;
   }
+public NamingEnumeration searchByFilter(String searchString) {
+    return searchByFilter(searchString, 0L); //default to no limit
+}
 public NamingEnumeration searchByFilter(String searchString, Long limit) {
     Hashtable env = init();
     InitialDirContext ctx1 = new InitialDirContext(env);  
